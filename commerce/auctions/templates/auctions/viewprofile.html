@@ -1,0 +1,11 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+My Listings<a href="{% url 'mylistings' %}">>>></a>
+<br>
+My Bids<a href="{% url 'mybids' %}">>>></a>
+<br>
+My Winnings<a href="{% url 'mywinnings' %}">>>></a>
+<br>
+{% endblock %}

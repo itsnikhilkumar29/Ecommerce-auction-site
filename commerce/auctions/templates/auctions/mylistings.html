@@ -1,0 +1,15 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+{% for listing in listings %}
+<pre style="color:red; text-align:center">
+<strong>{{ listing.name }}</strong>
+Price: {{ listing.startbid }}
+
+Created {{ listing.time }}
+<a href="{% url 'viewlisting' listing.id %}">View Listing</a>
+</pre>
+
+{% endfor %}
+{% endblock %}

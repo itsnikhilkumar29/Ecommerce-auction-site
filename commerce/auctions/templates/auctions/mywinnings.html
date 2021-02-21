@@ -1,0 +1,7 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+{% for win in winnings %}
+<li>won {{ win.listing }} for {{ win.amount }}</li>
+{% endfor %}
+{% endblock %}

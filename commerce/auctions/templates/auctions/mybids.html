@@ -1,0 +1,7 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+{% for bid in bids %}
+<li>{{ bid.amount }} on {{ bid.listing }} <a href="{% url 'viewlisting' bid.listing.id %}">View>>></a></li>
+{% endfor %}
+{% endblock %}

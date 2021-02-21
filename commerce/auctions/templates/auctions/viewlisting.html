@@ -1,0 +1,48 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<h2>Listing: {{ listing.name }}</h2>
+<h3><strong>Rs. {{ listing.startbid }}</strong></h3>
+<h4>Details</h4>
+<ul>
+	<li>Listed by: {{ listing.user }}</li>
+	<li>Listed on: {{ listing.time }}</li>
+</ul>
+{% if request.user == listing.user %}
+	{% if maxbid.amount >= listing.startbid and listing.available == True %}
+		Current maximum bid is {{ maxbid.amount }} by {{ maxbid.user }}.  Sell to this user?<a href="/makewinner/{{ listing.id }}/{{ maxbid.user.username }}/{{ maxbid.amount }}">>>>></a>
+	{% endif %}
+	{% if listing.available != True %}
+		You sold it already......  :D
+	{% endif %}
+	<br>
+	All Bids for your listing:
+	{% for bid in bids %}
+		<li>{{ bid.amount }} by {{ bid.user }}</li>
+	{% endfor %}
+{% endif %}
+{% if request.user != listing.user %}
+	{% if message %}
+		<h3>{{ message }}</h3>
+	{% endif %}
+	{% if listing.available %}
+		<form method="post" action="{% url 'viewlisting' listing.id %}">
+			{% csrf_token %}
+			<input type="text" placeholder="Place Bid amount" required name='bidamount'>
+			<input type="submit" value="place bid?">
+		</form>
+	{% endif %}
+	Total bids for this listing are {{ len_bids }}<br>
+	Maximum bid for this listing till now is {{ maxbid.amount }}
+{% endif %}
+<h3>All Comments</h3>
+{% for comment in comments %}
+	<li>{{ comment.user }}({{ comment.time }}):{{ comment.comment }}</li>
+{% endfor %}
+<form method='post' action="{% url 'addcomment' listing.id %}">
+	{% csrf_token %}
+	<input type='text' placeholder='place comment here' name='comment'>
+	<input type='submit' value='add comment'>
+</form>
+{% endblock %}
